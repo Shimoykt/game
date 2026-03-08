@@ -1,1 +1,76 @@
 げーむ
+<!DOCTYPE html>
+<html>
+<head>
+<title>反射神経ブロック叩きゲーム</title>
+<style>
+body{
+  text-align:center;
+  font-family:sans-serif;
+}
+
+#game{
+  width:300px;
+  height:300px;
+  margin:20px auto;
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  grid-template-rows:repeat(3,1fr);
+  gap:5px;
+}
+
+.block{
+  background:#ccc;
+  cursor:pointer;
+}
+
+.active{
+  background:red;
+}
+
+</style>
+</head>
+
+<body>
+
+<h1>反射神経ブロック叩きゲーム</h1>
+<p>赤いブロックをクリック！</p>
+<p>スコア: <span id="score">0</span></p>
+
+<div id="game"></div>
+
+<script>
+
+let score = 0;
+let blocks = [];
+const game = document.getElementById("game");
+
+for(let i=0;i<9;i++){
+  let block = document.createElement("div");
+  block.className="block";
+
+  block.onclick=function(){
+    if(block.classList.contains("active")){
+      score++;
+      document.getElementById("score").textContent=score;
+      block.classList.remove("active");
+    }
+  }
+
+  game.appendChild(block);
+  blocks.push(block);
+}
+
+function randomBlock(){
+  blocks.forEach(b=>b.classList.remove("active"));
+
+  let index = Math.floor(Math.random()*blocks.length);
+  blocks[index].classList.add("active");
+}
+
+setInterval(randomBlock,800);
+
+</script>
+
+</body>
+</html>
